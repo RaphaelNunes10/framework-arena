@@ -9,6 +9,7 @@ export default function Count() {
 
     //---
 
+    const isFirstRender = useRef(true);
     const [count, setCount] = useState(0);
 
     function incrementCount() {
@@ -19,13 +20,13 @@ export default function Count() {
       });
     };
 
-    const doubleCount = useMemo(() => {
-      return count * 2;
-    }, [count]);
-
     useEffect(() => {
-      console.log(`Double of count is: ${doubleCount}`);
-    }, [doubleCount]);
+      if (isFirstRender.current) {
+          isFirstRender.current = false;
+      } else {
+          console.log(`Double of count is: ${count * 2}`);
+      }
+    }, [count]);
 
     return (
       <div>
